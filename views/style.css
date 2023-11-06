@@ -1,0 +1,62 @@
+body {
+  width: 1080px;
+}
+
+/*This wrapper considered as the parent for elements with id  sidebar and main */
+.wrapper {
+  display: flex;
+}
+#sidebar {
+  background-color: gray;
+  font-size: 0.9rem;
+  padding: 10px;
+  width: 36%;
+}
+#main {
+  width: 62%;
+  padding: 10px;
+}
+input[type="text"] {
+  border: 1px solid gray;
+  border-radius: 0.375em;
+  height: 2.5em;
+  padding: 1em 0;
+  margin: 5px;
+}
+input[type="text"]:focus {
+  outline: unset;
+  border-color: red;
+}
+li {
+  list-style-type: disc;
+}
+/*All heading colors ?! and same font size for all ?*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #00b7ff;
+  font-family: "Roboto Slab", serif;
+  font-size: 50px;
+  margin: 0 0 1em 0;
+}
+
+* span:not(.extra) {
+  color: red;
+}
+
+#sidebar > .inner {
+  padding: 2.2em 2.2em 2.4em 2.2em;
+  width: 23em;
+}
+a {
+  color: rgba(0, 255, 255, 0.095);
+}
+
+a:visited {
+  color: aqua;
+}
+#container:nth-of-type(2n) {
+}
