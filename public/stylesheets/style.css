@@ -12,7 +12,7 @@ body {
 }
 :root {
   --cell-bg-1: aqua;
-  --cell-bg-2: rgb(50, 83, 83);
+  --cell-bg-2: rgb(107, 147, 147);
 }
 table,
 td,
@@ -23,7 +23,7 @@ td {
   width: 80px;
   height: 80px;
 }
-tr:nth-of-type(even) td:nth-of-type(odd) {
+tr:nth-of-type(2n) td:nth-of-type(odd) {
   background: var(--cell-bg-1);
 }
 tr:nth-of-type(even) td:nth-of-type(even) {
