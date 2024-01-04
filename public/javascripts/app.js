@@ -1,46 +1,37 @@
-/* Chess symbols in Unicode */
-const symbols = [
-  "&#x2656;",
-  "&#x2658;",
-  "&#x2657;",
-  "&#x2655;",
-  "&#x2654;",
-  "&#x2657;",
-  "&#x2658;",
-  "&#x2656;",
-];
-const pawn = "&#x2659;";
-/*DOM QUERIES*/
-const chessCells = document.querySelectorAll("td");
-const renderChessboard = (pov) => {
+const columnAnnotation = {
+  1: "A",
+  2: "B",
+  3: "C",
+  4: "D",
+  5: "E",
+  6: "F",
+  7: "G",
+  8: "H",
+};
+function renderChessboard(pov) {
+  let chessboard = "";
   if (pov === "white") {
-    /*White section */
-    for (let i = 0; i < 8; i++) {
-      chessCells[i].innerHTML = symbols[i];
-      chessCells[i].style.fontSize = "2rem";
-      chessCells[i].style.color = "white";
-    }
-    for (let i = 8; i < 16; i++) {
-      chessCells[i].innerHTML = pawn;
-      chessCells[i].style.fontSize = "2rem";
-      chessCells[i].style.color = "white";
-    }
-  } else if (pov === "black") {
-    /* Black section*/
-    let symbolIndex = 0;
-    for (let i = 56; i < 64; i++) {
-      chessCells[i].innerHTML = symbols[symbolIndex];
-      symbolIndex++;
-      chessCells[i].style.fontSize = "2rem";
-    }
-
-    for (let i = 48; i < 56; i++) {
-      chessCells[i].innerHTML = pawn;
-      chessCells[i].style.fontSize = "2rem";
+    for (let x = 7; x >= 0; x -= 1) {
+      let row = "<div class='row'>";
+      for (let y = 0; y < 8; y += 1) {
+        let column = columnAnnotation[(y + 1).toString()] + (x + 1).toString();
+        let square = `<div id='${column}'>${column}</div>`;
+        row += square;
+      }
+      chessboard += "\n" + row + "</div>";
     }
   } else {
-    alert("There is a problem whit Board generation");
+    for (let x = 0; x < 8; x += 1) {
+      let row = "<div class='row'>";
+      for (let y = 7; y >= 0; y -= 1) {
+        let column = columnAnnotation[(y + 1).toString()] + (x + 1).toString();
+        let square = `<div id='${column}'>${column}</div>`;
+        row += square;
+      }
+      chessboard += "\n" + row + "</div>";
+    }
   }
-};
-renderChessboard("white");
-renderChessboard("black");
+  return chessboard;
+}
+
+console.log(renderChessboard("white"));
