@@ -1,37 +1,32 @@
-const columnAnnotation = {
-  1: "A",
-  2: "B",
-  3: "C",
-  4: "D",
-  5: "E",
-  6: "F",
-  7: "G",
-  8: "H",
-};
-function renderChessboard(pov) {
-  let chessboard = "";
-  if (pov === "white") {
-    for (let x = 7; x >= 0; x -= 1) {
-      let row = "<div class='row'>";
-      for (let y = 0; y < 8; y += 1) {
-        let column = columnAnnotation[(y + 1).toString()] + (x + 1).toString();
-        let square = `<div id='${column}'>${column}</div>`;
-        row += square;
+//DOM queries
+const table = document.querySelector("table");
+
+//CELL identifier
+const symbols = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+//Rendering based on color
+function renderChessboard(color) {
+  if (color === "black") {
+    for (i = 0; i <= 7; i++) {
+      const tr = document.createElement("tr");
+      for (j = 0; j <= 7; j++) {
+        const td = document.createElement("td");
+        td.id = `${symbols[j]}${symbols.length - i}`;
+        tr.appendChild(td);
       }
-      chessboard += "\n" + row + "</div>";
+      table.appendChild(tr);
     }
   } else {
-    for (let x = 0; x < 8; x += 1) {
-      let row = "<div class='row'>";
-      for (let y = 7; y >= 0; y -= 1) {
-        let column = columnAnnotation[(y + 1).toString()] + (x + 1).toString();
-        let square = `<div id='${column}'>${column}</div>`;
-        row += square;
+    for (i = 0; i <= 7; i++) {
+      const tr = document.createElement("tr");
+      for (j = 7; j >= 0; j--) {
+        const td = document.createElement("td");
+        td.id = `${symbols[j]}${i + 1}`;
+        tr.appendChild(td);
       }
-      chessboard += "\n" + row + "</div>";
+      table.appendChild(tr);
     }
   }
-  return chessboard;
 }
 
-console.log(renderChessboard("white"));
+renderChessboard("white");
