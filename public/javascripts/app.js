@@ -18,10 +18,13 @@ const chessSymbols = {
   P: "&#9817;", // white pawn
 };
 
+let fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 // Putting the pieces in place
 function placePieces(fen) {
-  const pieces = fen.split(" ")[0]; // Extracting the piece placement part from the FEN string
+  document.querySelectorAll("td").forEach((x) => (x.innerHTML = ""));
 
+  const pieces = fen.split(" ")[0]; // Extracting the piece placement part from the FEN string
   let row = 8;
   let col = 0;
 
@@ -48,7 +51,11 @@ function placePieces(fen) {
     }
   }
 }
-
+function resettheBoard() {
+  document
+    .querySelectorAll(".possibleMove")
+    .forEach((x) => x.classList.remove("possibleMove"));
+}
 // Rendering based on color
 function renderChessboard(color) {
   if (color === "black") {
@@ -74,6 +81,47 @@ function renderChessboard(color) {
   }
 }
 
+let possibleMoves = [];
+//DoM QUERy
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("td").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      // check if cell is in possible moves
+      const possibleMoveI = possibleMoves.findIndex(
+        (x) => x.to === e.target.id
+      );
+      if (possibleMoveI !== -1) {
+        fetch(`move/${e.target.id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(possibleMoves[possibleMoveI]),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            placePieces(res.response.move_made.board_after_move.fen);
+            fenString = res.response.move_made.board_after_move.fen;
+            resettheBoard();
+            possibleMoves = [];
+          });
+        return;
+      }
+      fetch(`/possible/${e.target.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fenString }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          resettheBoard();
+          possibleMoves = res.response?.possible_moves;
+          res.response?.possible_moves.forEach((response) => {
+            document.getElementById(response.to).classList.add("possibleMove");
+          });
+        });
+    });
+  });
+});
+
 // Example usage
 renderChessboard("black");
-placePieces("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+placePieces(fenString);

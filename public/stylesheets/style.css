@@ -22,8 +22,9 @@ tr {
 td {
   width: 80px;
   height: 80px;
+  font-size: 35px;
 }
-tr:nth-of-type(2n) td:nth-of-type(odd) {
+td tr:nth-of-type(2n) td:nth-of-type(odd) {
   background: var(--cell-bg-1);
 }
 tr:nth-of-type(even) td:nth-of-type(even) {
@@ -35,6 +36,10 @@ tr:nth-of-type(odd) td:nth-of-type(even) {
 }
 tr:nth-of-type(odd) td:nth-of-type(odd) {
   background: var(--cell-bg-2);
+}
+
+.possibleMove {
+  background-color: yellow !important;
 }
 
 @media (max-width: 550px) {
